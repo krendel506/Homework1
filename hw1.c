@@ -1,78 +1,45 @@
 #include <stdio.h>
-#include <stdbool.h>
 #include <math.h>
 
 int main(){
-    float a=0;  
-    int h=0; //step
-    int c=0;
+    float a=0;
+    float h=0;
+    float c=0;
     int n=0;
-    float y ;
-
-    int temporaryStorage = 0;
-
+    float x,y;
+    
+    //Inputing variables
     printf("Enter x value: ");
     scanf("%f",&a);
 
-    while(true){
-        printf("Enter H: ");
-        scanf("%d",&temporaryStorage);
-     if(temporaryStorage > 0){
-        h= temporaryStorage;
-        break;          
-     }
-    }
+    do{
+        printf("Enter a value for H (H>0): ");
+        scanf("%f",&h);
+    }while(h<=0);
 
-    while(true){
-        printf("Enter C: ");
-        scanf("%d",&temporaryStorage);
-     if(temporaryStorage >= 0){
-        c= temporaryStorage;
-        break;
-     }
-    }
+    do{
+        printf("Enter value for C (C>1): ");
+        scanf("%f",&c);
+    }while(c<=1);
      
-    while(true){
+    do{
         printf("Enter N: ");
-        scanf("%d",&temporaryStorage);
-     if(temporaryStorage > 0){
-        n = temporaryStorage;
-        break;
-     }
-    }
+        scanf("%d",&n);
+    }while(n<0);
+
 
     printf("X           Y\n");
-     // Variables to store current power of C and sSide for the loop
-     float currentPower = 1.0f;  // C^0 = 1 for the first iteration
-
+    //calculating the value
     for (int i = 0; i < n; i++) {
-        float aCurrentValue = 0;
-
-        if (i == 0) {
-            aCurrentValue = 0;  // First iteration, sSide is 0
-        } else if (i == 1) {
-            aCurrentValue = h;  // Second iteration, sSide is h
-        } else {
-            currentPower *= c;  // Iteratively calculate c^(i-1)
-            aCurrentValue = currentPower * h;
+        x= a + pow(c,i)*h;
+        y= sqrt(pow(x,2) + x - 20) / (pow(x,2) + x - 10);
+        
+       if (isnan(y)) {
+            printf("%-10.2f  missing \n",x);
         }
-
-        a += aCurrentValue;  // Update value of 'a'
-        float a_square = powf(a,2);
-        float bottomSide = a_square + a - 10;
-        float squareRootExpression = a_square + a - 20;
-    
-    /*only checking if squareroot is positive
-    because x<-5 and x>4
-    while for bottomSide x<3.7 and x>2.7*/
-      if(squareRootExpression < 0){
-         printf("%-10.2f  missing \n",a);
-      }
-      else{
-        float squareRoot = sqrt(squareRootExpression);
-        y = squareRoot / bottomSide;    
-        printf("%-10.2f  %-10.6f \n",a,y);
-      }  
+        else {
+            printf("%-10.2f  %-10.6f \n",x,y);
+            }
     } 
     
 }
